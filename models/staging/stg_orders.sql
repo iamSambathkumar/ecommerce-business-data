@@ -27,4 +27,7 @@ renamed AS (
 
 )
 
-SELECT * FROM renamed
+SELECT * FROM renamed WHERE customer_id IN (
+  SELECT customer_id FROM {{ ref('stg_customers') }}
+)
+
