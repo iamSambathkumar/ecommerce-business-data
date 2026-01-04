@@ -1,7 +1,7 @@
 WITH source AS (
 
     SELECT *
-    FROM {{ source('raw_ecom_data', 'customers') }}
+    FROM {{ source('raw_ecom_data', 'customers') }} 
 
 ),
 
@@ -21,10 +21,10 @@ renamed AS (
         customer_segment,
         acquisition_channel,
         TO_TIMESTAMP_TZ(created_at)     AS created_at,
-        CAST(lifetime_value AS NUMBER(12,2)) AS lifetime_value,
+        TRY_CAST(lifetime_value AS NUMBER(12,2)) AS lifetime_value,
         is_active
-    FROM source
+    FROM source  WHERE email IS NOT NULL
 
 )
 
-SELECT * FROM renamed
+SELECT * FROM renamed 
