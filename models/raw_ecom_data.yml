@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: raw_ecom_data          # dbt reference/config name
+    database: DBT_PRACTICE
+    schema: RAW_ECOM_DATA
+
+    tables:
+      - name: customers
+        description: "Raw customers data from e-commerce system"
+
+      - name: orders
+        description: "Raw orders transaction data"
+
+      - name: products
+        description: "Raw products master data"
+
+      - name: suppliers
+        description: "Raw suppliers / vendors data"
+
+      - name: web_events
+        description: "Raw web clickstream and user behavior data"
