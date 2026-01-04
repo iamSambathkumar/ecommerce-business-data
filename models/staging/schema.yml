@@ -1,0 +1,61 @@
+version: 2
+
+models:
+
+  - name: stg_customers
+    description: "Cleaned customers staging table"
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+      - name: email
+        tests:
+          - not_null
+
+      - name: lifetime_value
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: stg_products
+    description: "Cleaned products staging table"
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+      - name: unit_price
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: stg_suppliers
+    description: "Cleaned suppliers staging table"
+    columns:
+      - name: supplier_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_orders
+    description: "Cleaned orders staging table"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+  - name: stg_web_events
+    description: "Cleaned web events staging table"
+    columns:
+      - name: event_id
+        tests:
+          - not_null
