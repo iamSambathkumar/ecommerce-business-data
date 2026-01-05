@@ -5,7 +5,19 @@ WITH source AS (
 
 ),
 
-renamed AS (
+ranked AS (
+
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY supplier_id
+            ORDER BY TO_TIMESTAMP_TZ(created_at) DESC
+        ) AS rn
+    FROM source
+
+),
+
+deduped AS (
 
     SELECT
         supplier_id,
@@ -24,4 +36,4 @@ renamed AS (
 
 )
 
-SELECT * FROM renamed
+SELECT * FROM deduped
