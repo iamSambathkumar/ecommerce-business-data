@@ -9,4 +9,4 @@ SELECT
     p.discontinued
 FROM {{ ref('stg_products') }} p
 LEFT JOIN {{ ref('stg_suppliers') }} s
-  ON p.supplier_id = s.supplier_id;
+  ON p.supplier_id = s.supplier_id

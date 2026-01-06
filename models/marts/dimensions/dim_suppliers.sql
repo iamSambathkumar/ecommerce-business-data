@@ -5,4 +5,4 @@ SELECT
     city,
     rating,
     is_active
-FROM {{ ref('stg_suppliers') }};
+FROM {{ ref('stg_suppliers') }}
