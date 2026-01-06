@@ -37,6 +37,7 @@ deduped AS (
         is_active
     FROM ranked
     WHERE rn = 1
+    AND email IS NOT NULL
 
 )
 
