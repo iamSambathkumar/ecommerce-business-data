@@ -1,3 +1,8 @@
+{{ config(
+    materialized='incremental',
+    unique_key='order_id'
+) }}
+
 SELECT
     order_id,
     customer_id,
@@ -14,3 +19,7 @@ SELECT
     payment_method,
     created_at
 FROM {{ ref('stg_orders') }}
+
+{% if is_incremental() %}
+WHERE created_at > (SELECT MAX(created_at) FROM {{ this }})
+{% endif %}
