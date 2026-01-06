@@ -1,3 +1,8 @@
+{{ config(
+    materialized='incremental',
+    unique_key='event_id'
+) }}
+
 SELECT
     event_id,
     session_id,
@@ -11,3 +16,7 @@ SELECT
     city,
     event_properties
 FROM {{ ref('stg_web_events') }}
+
+{% if is_incremental() %}
+WHERE event_timestamp > (SELECT MAX(event_timestamp) FROM {{ this }})
+{% endif %}
